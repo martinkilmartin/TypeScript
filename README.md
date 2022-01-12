@@ -195,9 +195,9 @@ sarah;
 ### Impossible Conditions
 
 ```typescript
-let s;
+let s = 'it works';
 if (1 === 2) {
-    s = 'it worked'
+    s = 'never'
 };
 s;
 ❌ // type error: This condition will always return 'false' since the types '1' and '2' have no overlap.
@@ -206,12 +206,12 @@ s;
 ❗ Typescript compares **literal types**, _not_ **values**.
 
 ```typescript
-let s;
+let s = 'it works';
 if (2 + 2 === 5) {
-    s = 'it worked'
+    s = 'never'
 };
 s;
-✅ // 'it worked'
+✅ // 'it works'
 ```
 
 ### `keyof` `typeof`
