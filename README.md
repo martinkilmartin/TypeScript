@@ -9,7 +9,7 @@ Adding static type definitions to Javascript
 // Types must be unique
 type User = { name: string };
 type User = { email: string };
-❌ // type error: Duplicate identifier 'User'
+❌ type error: Duplicate identifier 'User'
 
 // Intersection
 type HasName = { name: string };
@@ -22,7 +22,7 @@ const user: User = {
 };
 
 user;
-✅ // {email: 'sally@email.net', name: 'Sally'}
+✅ {email: 'sally@email.net', name: 'Sally'}
 ```
 
 ### Interfaces
@@ -43,7 +43,7 @@ const user: User = {
 };
 
 user;
-✅ // {email: 'sally@email.net', name: 'Sally'}
+✅ {email: 'sally@email.net', name: 'Sally'}
 ```
 
 ### Interfaces v `type` keyword
@@ -72,20 +72,20 @@ type User = {
 ```typescript
 const promise: Promise<number> = Promise.resolve(99);
 promise;
-✅ // {fulfilled: 99}
+✅ {fulfilled: 99}
 ```
 
 ```typescript
 const promise: Promise<string> = Promise.resolve(99);
 promise;
-❌ // type error: 'Promise<number>' is not assignable to type 'Promise<string>'.
-❌ // Type 'number' is not assignable to type 'string'.
+❌ type error: 'Promise<number>' is not assignable to type 'Promise<string>'.
+❌ Type 'number' is not assignable to type 'string'.
 ```
 
 ```typescript
 const promise: Promise<string> = Promise.resolve(100).then((n) => n.toString());
 promise;
-✅ // {fulfilled: '100'}
+✅ {fulfilled: '100'}
 ```
 
 ### Indexing into object types
@@ -118,7 +118,7 @@ const user: object = {
   name: "Sally",
 };
 user.name;
-❌ // type error: Property 'name' does not exist on type 'object'
+❌ type error: Property 'name' does not exist on type 'object'
 ```
 
 ### Enums
@@ -131,7 +131,7 @@ enum HTTPMethods {
 
 const method: HTTPMethods = HTTPMethods.Post;
 method;
-✅ // 'POST'
+✅ 'POST'
 ```
 
 ```typescript
@@ -140,9 +140,9 @@ enum HTTPMethods { Get, Post };
 const get: HTTPMethods = HTTPMethods.Get;
 const post: HTTPMethods = HTTPMethods.Post;
 get;
-✅ // 0
+✅ 0
 post;
-✅ // 1
+✅ 1
 ```
 
 ```typescript
@@ -151,9 +151,9 @@ enum HTTPMethods { Get = 10, Post };
 const get: HTTPMethods = HTTPMethods.Get;
 const post: HTTPMethods = HTTPMethods.Post;
 get;
-✅ // 10
+✅ 10
 post;
-✅ // 11
+✅ 11
 ```
 
 ```typescript
@@ -164,7 +164,7 @@ enum HTTPMethods {
 };
 const get: HTTPMethods = 'GET'
 get;
-❌ // type error: Type '"GET"' is not assignable to type 'HTTPMethods'.
+❌ type error: Type '"GET"' is not assignable to type 'HTTPMethods'.
 ```
 
 ❗ Enums add additional additional JavaScript, breaking TypeScript's core "type-level extension" rule.
@@ -182,14 +182,14 @@ type NameAndEmail = Pick<User, 'name' | 'email'>;
 
 const sally: NameAndEmail = {name: 'Sally', email: 'sally@email.net'};
 sally;
-✅ // {email: 'sally@email.net', name: 'Sally'}
+✅ {email: 'sally@email.net', name: 'Sally'}
 
 // equivalent with Omit
 type Ageless = Omit<User, 'age'>;
 
 const sarah: Ageless = {name: 'Sarah', email: 'sarah@email.net'};
 sarah;
-✅ // {email: 'sarah@email.net', name: 'Sarah'}
+✅ {email: 'sarah@email.net', name: 'Sarah'}
 ```
 
 ### Impossible Conditions
@@ -200,7 +200,7 @@ if (1 === 2) {
     s = 'never'
 };
 s;
-❌ // type error: This condition will always return 'false' since the types '1' and '2' have no overlap.
+❌ type error: This condition will always return 'false' since the types '1' and '2' have no overlap.
 ```
 
 ❗ Typescript compares **literal types**, _not_ **values**.
@@ -211,7 +211,7 @@ if (2 + 2 === 5) {
     s = 'never'
 };
 s;
-✅ // 'it works'
+✅ 'it works'
 ```
 
 ### `keyof` `typeof`
@@ -257,7 +257,7 @@ function f(): never {
   }
 };
 f();
-❌ // type error: A function returning 'never' cannot have a reachable end point.
+❌ type error: A function returning 'never' cannot have a reachable end point.
 ```
 
 ### Recursive Types
@@ -266,4 +266,27 @@ Encompass all JSON values:
 
 ```typescript
 type Json = null | boolean | string | number | Json[] | { [key: string]: Json };
+```
+### `as` Is Dangerous!
+
+```typescript
+const aNumber: unknown = 5;
+const aString: aNumber as string;
+aString;
+✅ 5
+```
+
+```typescript
+const aNumber: unknown = 5;
+const aString = aNumber as string;
+const length: number = aString.length;
+length;
+✅ undefined
+```
+
+```typescript
+const anUnknown: unknown = true;
+const length: number = (anUnknown as string).length;
+length;
+✅ undefined
 ```
