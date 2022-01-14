@@ -214,6 +214,24 @@ s;
 ✅ 'it works'
 ```
 
+```typescript
+let s = 'it works'
+if ('string 1' === 'string 2') {
+    s = 'never';
+};
+s;
+❌ type error: This condition will always return 'false' since the types '"string 1"' and '"string 2"' have no overlap.
+```
+
+```typescript
+let s = 'it works'
+if ('' + 'string 1' === 'string 2') {
+    s = 'never';
+};
+s;
+✅ 'it works'
+```
+
 ### `keyof` `typeof`
 
 ```tsx
