@@ -308,3 +308,55 @@ const length: number = (anUnknown as string).length;
 length;
 ✅ undefined
 ```
+
+### Classes
+
+```typescript
+class Employee {
+  // public by default
+  name: string;
+  // private
+  #vaccinated: boolean;
+  
+  constructor(name: string, vaccinated: boolean) {
+    this.name = name;
+    this.#vaccinated = vaccinated;
+  }
+  
+  needsVaccination(): boolean {
+    return !this.#vaccinated;
+  }
+}
+
+new Employee('Alice', true).name;
+✅ 'Alice'
+new Employee('Alice', true).#vaccinated;
+❌ type error: Property '#vaccinated' is not accessible outside class 'Employee' because it has a private identifier.
+```
+
+```typescript
+class Employee {
+  name: string;
+  vaccinated: boolean;
+  
+  constructor(name: string, vaccinated: boolean) {
+    this.name = name;
+    this.vaccinated = vaccinated;
+  }
+  
+  needsVaccination(): boolean {
+    return !this.vaccinated;
+  }
+}
+
+class Boss extends Employee {
+  needsVaccination(): string {
+    return this.vaccinated ? 'no' : 'yes';
+  }
+}
+
+new Boss('Alice', true);
+❌ type error: Property 'needsVaccination' in type 'Boss' is not assignable to the same property in base type 'Employee'.
+  ❌ Type '() => string' is not assignable to type '() => boolean'.
+    ❌ Type 'string' is not assignable to type 'boolean'.
+```
