@@ -428,7 +428,7 @@ add(1, 2, '3');
 ❌ type error: Argument of type 'string' is not assignable to parameter of type 'number'.
 ```
 
-⚜ Alternate array syntax : number[] | Array<number>
+⚜ Alternate array syntax : `number[]` | `Array<number>`
 
 ```typescript
 function add(...numbers: Array<number>) {
