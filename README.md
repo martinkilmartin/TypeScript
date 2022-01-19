@@ -360,3 +360,114 @@ new Boss('Alice', true);
   ❌ Type '() => string' is not assignable to type '() => boolean'.
     ❌ Type 'string' is not assignable to type 'boolean'.
 ```
+
+### Function Parameters
+
+#### Optional Parameters
+
+```typescript
+function add(x: number, y?: number) {
+  return x + (y ?? 1);
+}
+[add(3, 4), add(3)];
+✅ [7, 4]
+```
+
+❗ Optional parameters must be declared after required parameters.
+
+```typescript
+function add(x?: number, y: number) {
+  return (x ?? 1) + y;
+}
+[add(3, 4), add(3)];
+❌ type error: A required parameter cannot follow an optional parameter.
+```
+
+#### Default Values
+
+```typescript
+function add(x: number, y: number = 1) {
+  return x + y;
+}
+[add(3, 4), add(3)];
+✅ [7, 4]
+```
+
+```typescript
+function add(x: number, y: number = undefined) {
+  return x + y;
+}
+[add(3, 4), add(3)];
+❌ type error: Type 'undefined' is not assignable to type 'number'.
+```
+
+#### Rest Parameters
+
+```typescript
+function add(...numbers: number) {
+  let sum = 0;
+  for (const n of numbers) {
+    sum += n;
+  }
+  return sum;
+}
+❌ type error: A rest parameter must be of an array type.
+```
+
+```typescript
+function add(...numbers: number[]) {
+  let sum = 0;
+  for (const n of numbers) {
+    sum += n;
+  }
+  return sum;
+}
+[add(), add(1, 2), add(100, 200, 300)]
+✅ [0, 3, 600]
+add(1, 2, '3');
+❌ type error: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+⚜ Alternate array syntax : number[] | Array<number>
+
+```typescript
+function add(...numbers: Array<number>) {
+  ...
+```
+
+### Function Types
+
+#### Optional Parameters
+
+```typescript
+type AddFunction = (x:number, y?: number) => number;
+
+const add: AddFunction = (x, y) => {
+  return x + (y ?? 1);
+};
+[add(3, 4), add(3)];
+✅ [7, 4]
+```
+
+#### Rest Parameters
+
+```typescript
+type AddFunction = (...numbers: number[]) => number;
+
+const add: AddFunction = (...numbers) => {
+  let sum = 0;
+  for (const n of numbers) {
+    sum += n;
+  }
+  return sum;
+}
+[add(), add(1, 2), add(100, 200, 300)]
+✅ [0, 3, 600]
+```
+
+#### Default Parameters
+
+```typescript
+type AddFunction = (x: number, y: number = 1) => number;
+❌ type error: A parameter initializer is only allowed in a function or constructor implementation.
+```
