@@ -471,3 +471,48 @@ const add: AddFunction = (...numbers) => {
 type AddFunction = (x: number, y: number = 1) => number;
 ❌ type error: A parameter initializer is only allowed in a function or constructor implementation.
 ```
+
+### Indexing Into Tuple and Array Types
+#### Tuples
+
+```typescript
+type HostAndPort = [string, number];
+const host: HostAndPort[0] = 'localhost';
+const port: HostAndPort[1] = 1234;
+const hostAndPort: HostAndPort = [host, port];
+hostAndPort;
+✅ ['localhost', 1234]
+```
+
+```typescript
+type HostAndPort = [string, number];
+const host: HostAndPort[2] = undefined;
+host;
+❌ type error: Tuple type 'HostAndPort' of length '2' has no element at index '2'.
+```
+
+#### Arrays
+
+```typescript
+type Names = string[];
+const userNames: Names = ['alice', 'betty'];
+const userName: Names[0] = 'cindy';
+username;
+✅ 'cindy'
+```
+
+```typescript
+type Names = string[];
+const userNames: Names = ['alice', 'betty'];
+const userName: Names[999] = 'cindy';
+username;
+```
+
+```typescript
+✅ 'cindy'
+type Names = string[];
+const userNames: Names = ['alice', 'betty'];
+const userName: Names[number] = 'cindy';
+username;
+✅ 'cindy'
+```
