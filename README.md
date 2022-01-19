@@ -87,6 +87,15 @@ const promise: Promise<string> = Promise.resolve(100).then((n) => n.toString());
 promise;
 ✅ {fulfilled: '100'}
 ```
+### `async` `await`
+
+```typescript
+async function double(x: Promise<number>): Promise<number> {
+  return 2 * await x;
+}
+double(Promise.resolve(5))
+✅ {fulfilled: '10'}
+```
 
 ### Indexing into object types
 
