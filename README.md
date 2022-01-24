@@ -525,3 +525,74 @@ const userName: Names[number] = 'cindy';
 username;
 ✅ 'cindy'
 ```
+
+### Extending Types
+
+#### `interface` `extends` `interface`
+
+```typescript
+interface CouldBeBoss { boss: boolean }
+
+interface Employee extends CouldBeBoss { name: string }
+
+const employee: Employee = { name: 'Ann', boss: true };
+employee; ✅ { boss: true, name: 'Ann' }
+```
+
+#### `interface` `extends` `type`
+
+```typescript
+type CouldBeBoss = { boss: boolean }
+
+interface Employee extends CouldBeBoss { name: string }
+
+const employee: Employee = { name: 'Ann', boss: true };
+employee; ✅ { boss: true, name: 'Ann' }
+```
+
+#### `interface` `extends` `class`
+
+```typescript
+class Boss {
+  employees: number; budget: number;
+
+  constructor(employees: number, budget: number) { 
+    this.employees = employees; this.budget = budget;
+  }
+
+  canFire() {
+    return this.employees > 0;
+  }
+
+  canHire() {
+    return this.budget > 50_000;
+  }
+}
+
+interface Manager extends Boss { name: string }
+
+const msManager: Manager = {
+  employees: 10,
+  budget: 10_000,
+  canFire: () => true,
+  canHire: () => false,
+  name: 'Ann',
+};
+
+msManager.name;
+✅ 'Ann' msManager.canFire();
+✅ true msManager.canHire();
+✅ false msManager instanceof Boss;
+✅ false
+```
+
+```typescript
+const mrManager: Manager = {
+  budget: 100_000,
+  canFire: () => false,
+  canHire: () => true,
+  name: 'Alan',
+};
+
+❌ type error: Property 'employees' is missing in type '{ budget: 100_000; canFire: () => false; canHire: () => true; name: 'Alan'; }' but required in type 'Manager'.
+```
