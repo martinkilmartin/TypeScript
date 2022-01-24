@@ -599,5 +599,5 @@ const mrManager: Manager = {
   name: 'Alan',
 };
 
-❌ type error: Property 'employees' is missing in type '{ budget: 100_000; canFire: () => false; canHire: () => true; name: 'Alan'; }' but required in type 'Manager'.
+❌ type error: Property 'employees' is missing in type '{ budget: 100_000; canFire: () => false; canHire: () => true; name: "Alan"; }' but required in type 'Manager'.
 ```
