@@ -536,7 +536,8 @@ interface CouldBeBoss { boss: boolean }
 interface Employee extends CouldBeBoss { name: string }
 
 const employee: Employee = { name: 'Ann', boss: true };
-employee; ✅ { boss: true, name: 'Ann' }
+employee;
+✅ { boss: true, name: 'Ann' }
 ```
 
 #### `interface` `extends` `type`
@@ -547,7 +548,8 @@ type CouldBeBoss = { boss: boolean }
 interface Employee extends CouldBeBoss { name: string }
 
 const employee: Employee = { name: 'Ann', boss: true };
-employee; ✅ { boss: true, name: 'Ann' }
+employee;
+✅ { boss: true, name: 'Ann' }
 ```
 
 #### `interface` `extends` `class`
@@ -580,9 +582,12 @@ const msManager: Manager = {
 };
 
 msManager.name;
-✅ 'Ann' msManager.canFire();
-✅ true msManager.canHire();
-✅ false msManager instanceof Boss;
+✅ 'Ann'
+msManager.canFire();
+✅ true
+msManager.canHire();
+✅ false
+msManager instanceof Boss;
 ✅ false
 ```
 
