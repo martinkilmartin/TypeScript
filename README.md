@@ -601,3 +601,49 @@ const mrManager: Manager = {
 
 ❌ type error: Property 'employees' is missing in type '{ budget: 100_000; canFire: () => false; canHire: () => true; name: "Alan"; }' but required in type 'Manager'.
 ```
+
+### ReturnType
+
+```typescript
+type StringFunction = () => string;
+type MyReturnType = ReturnType<StringFunction>;
+const hello: MyReturnType = () => 123;
+hello;
+❌ type error: Type 'number' not assignable to type 'string'.
+```
+
+#### 🔧 ReturnType - under the hood
+
+```typescript
+type ReturnType<T extends (...args: any) => any> =
+  T extends (...args: any) => infer R ? R : any;
+```
+
+### Parameters
+
+```typescript
+type AddFunction = (x: number, y: number) => number;
+type AddParameters = Parameters<AddFunction>;
+const args: AddParameters = [1, 2, 3];
+args;
+❌ type error: Type '[number, number, number]' is not assignable to type '[x: number, y: number]'.
+  ❌ Source has 3 element(s) but target allows only 2.
+```
+
+### ReadonlyArray (ReadonlySet, ReadonlyMap)
+
+```typescript
+const numbers: ReadonlyArray<number> = [1, 2, 3];
+numbers.length;
+✅ 3;
+numbers.sort();
+❌ type error: Property 'sort' does not exist on type 'readonly number[]'.
+```
+
+```typescript
+const strings: ReadonlyArray<string> = ['a', 'b', 'c'];
+strings.indexOf('b');
+✅ 1;
+strings.push('d');
+❌ type error: Property 'push' does not exist on type 'readonly string[]'.
+```
