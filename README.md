@@ -647,3 +647,37 @@ strings.indexOf('b');
 strings.push('d');
 ❌ type error: Property 'push' does not exist on type 'readonly string[]'.
 ```
+
+### Impossible Intersections
+
+```typescript
+type HasEmailText = {
+  email: string
+};
+type HasEmailBoolean = {
+  email: boolean
+};
+type User = HasEmailText & HasEmailBoolean;
+'All good' + ' in the hood.'
+✅ 'All good in the hood';
+const user: User = {
+  email: 'betty@example.com'
+};
+❌ type error: Type 'string' is not assignable to type 'never'.
+```
+
+#### Extend instead of Intersect
+
+```typescript
+interface HasEmail {
+  email: string
+}
+interface User extends HasEmail {
+  email: boolean
+}
+const user: User = { name: 'betty@example.com' };
+user;
+❌ type error: Interface 'User' incorrectly extends interface 'HasEmail'.
+  ❌ Types of property 'email' are incompatible.
+    ❌ Type 'boolean' is not assignable to type 'string'.
+```
