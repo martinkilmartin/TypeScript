@@ -690,7 +690,7 @@ type User = { name: string phone: number };
 type PartialUser = { name?: string phone?: number };
 
 // Equivalent with Partial Utility Type
-const partialUser: Partial = { phone: 1234567 }
+const partialUser: Partial<PartialUser> = { phone: 1234567 }
 partialUser.phone;
 ✅ 1234567
 const userPhoneNumber: number = partialUser.phone;
