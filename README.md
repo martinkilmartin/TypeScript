@@ -681,3 +681,28 @@ user;
   ❌ Types of property 'email' are incompatible.
     ❌ Type 'boolean' is not assignable to type 'string'.
 ```
+
+## Partial
+
+```typescript
+type User = { name: string phone: number };
+
+type PartialUser = { name?: string phone?: number };
+
+// Equivalent with Partial Utility Type
+const partialUser: Partial = { phone: 1234567 }
+partialUser.phone;
+✅ 1234567
+const userPhoneNumber: number = partialUser.phone;
+❌ type error: Type 'number | undefined' is not assignable to type 'number'.
+  ❌ Type 'undefined' is not assignable to type 'number'.
+```
+
+Type definition of Partial
+
+```typescript
+type Partial = { 
+  [P in keyof T]?: T[P];
+};
+```
+
