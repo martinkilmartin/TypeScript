@@ -1,9 +1,8 @@
-# TypeScript
+# Everyday Typescript
+
 Adding static type definitions to Javascript
 
-## Everyday Typescript
-
-### Types
+## Types
 
 ```typescript
 // Types must be unique
@@ -25,7 +24,7 @@ user;
 ✅ {email: 'sally@email.net', name: 'Sally'}
 ```
 
-### Interfaces
+## Interfaces
 
 ```typescript
 // Interfaces with the same name are merged
@@ -46,14 +45,14 @@ user;
 ✅ {email: 'sally@email.net', name: 'Sally'}
 ```
 
-### Interfaces v `type` keyword
+## Interfaces v `type` keyword
 
 1. Interfaces can produce better error messages in some cases
 2. Interfaces can sometimes compile faster than object types
 3. The official Typescript docs uses interfaces in its examples
 4. The Typescript team endorses interfaces "it should be just interfaces for anything they can model"
 
-### Optional properties
+## Optional properties
 
 ```typescript
 type User = {
@@ -67,7 +66,7 @@ type User = {
 };
 ```
 
-### Promises
+## Promises
 
 ```typescript
 const promise: Promise<number> = Promise.resolve(99);
@@ -87,7 +86,7 @@ const promise: Promise<string> = Promise.resolve(100).then((n) => n.toString());
 promise;
 ✅ {fulfilled: '100'}
 ```
-### `async` `await`
+## `async` `await`
 
 ```typescript
 async function double(x: Promise<number>): Promise<number> {
@@ -97,7 +96,7 @@ double(Promise.resolve(5))
 ✅ {fulfilled: '10'}
 ```
 
-### Indexing into object types
+## Indexing into object types
 
 ```typescript
 type ConnectionOptions = {
@@ -118,7 +117,7 @@ function buildConnectionOptions(
 };
 ```
 
-### `object` type
+## `object` type
 
 `object` type is almost never useful
 
@@ -130,7 +129,7 @@ user.name;
 ❌ type error: Property 'name' does not exist on type 'object'
 ```
 
-### Enums
+## Enums
 
 ```typescript
 enum HTTPMethods {
@@ -178,7 +177,7 @@ get;
 
 ❗ Enums add additional additional JavaScript, breaking TypeScript's core "type-level extension" rule.
 
-### Pick & Omit
+## Pick & Omit
 
 ```typescript
 type User = {
@@ -201,7 +200,7 @@ sarah;
 ✅ {email: 'sarah@email.net', name: 'Sarah'}
 ```
 
-### Impossible Conditions
+## Impossible Conditions
 
 ```typescript
 let s = 'it works';
@@ -241,7 +240,7 @@ s;
 ✅ 'it works'
 ```
 
-### `keyof` `typeof`
+## `keyof` `typeof`
 
 ```tsx
 const SIZES = {
@@ -261,7 +260,7 @@ const Button = ({ text, size = "no" }: Props): JSX.Element => (
 );
 ```
 
-### Type guards
+## Type guards
 
 ```typescript
 function isString(s: unknown): s is string {
@@ -273,7 +272,7 @@ function isNumber(n: unknown): n is number {
 }
 ```
 
-### never
+## never
 
 ```typescript
 function f(): never {
@@ -287,14 +286,15 @@ f();
 ❌ type error: A function returning 'never' cannot have a reachable end point.
 ```
 
-### Recursive Types
+## Recursive Types
 
 Encompass all JSON values:
 
 ```typescript
 type Json = null | boolean | string | number | Json[] | { [key: string]: Json };
 ```
-### `as` Is Dangerous!
+
+## `as` Is Dangerous!
 
 ```typescript
 const aNumber: unknown = 5;
@@ -318,7 +318,7 @@ length;
 ✅ undefined
 ```
 
-### Classes
+## Classes
 
 ```typescript
 class Employee {
@@ -370,9 +370,9 @@ new Boss('Alice', true);
     ❌ Type 'string' is not assignable to type 'boolean'.
 ```
 
-### Function Parameters
+## Function Parameters
 
-#### Optional Parameters
+### Optional Parameters
 
 ```typescript
 function add(x: number, y?: number) {
@@ -392,7 +392,7 @@ function add(x?: number, y: number) {
 ❌ type error: A required parameter cannot follow an optional parameter.
 ```
 
-#### Default Values
+### Default Values
 
 ```typescript
 function add(x: number, y: number = 1) {
@@ -410,7 +410,7 @@ function add(x: number, y: number = undefined) {
 ❌ type error: Type 'undefined' is not assignable to type 'number'.
 ```
 
-#### Rest Parameters
+### Rest Parameters
 
 ```typescript
 function add(...numbers: number) {
@@ -444,9 +444,9 @@ function add(...numbers: Array<number>) {
   ...
 ```
 
-### Function Types
+## Function Types
 
-#### Optional Parameters
+### Optional Parameters
 
 ```typescript
 type AddFunction = (x:number, y?: number) => number;
@@ -458,7 +458,7 @@ const add: AddFunction = (x, y) => {
 ✅ [7, 4]
 ```
 
-#### Rest Parameters
+### Rest Parameters
 
 ```typescript
 type AddFunction = (...numbers: number[]) => number;
@@ -474,15 +474,15 @@ const add: AddFunction = (...numbers) => {
 ✅ [0, 3, 600]
 ```
 
-#### Default Parameters
+### Default Parameters
 
 ```typescript
 type AddFunction = (x: number, y: number = 1) => number;
 ❌ type error: A parameter initializer is only allowed in a function or constructor implementation.
 ```
 
-### Indexing Into Tuple and Array Types
-#### Tuples
+## Indexing Into Tuple and Array Types
+### Tuples
 
 ```typescript
 type HostAndPort = [string, number];
@@ -500,7 +500,7 @@ host;
 ❌ type error: Tuple type 'HostAndPort' of length '2' has no element at index '2'.
 ```
 
-#### Arrays
+### Arrays
 
 ```typescript
 type Names = string[];
@@ -526,9 +526,9 @@ username;
 ✅ 'cindy'
 ```
 
-### Extending Types
+## Extending Types
 
-#### `interface` `extends` `interface`
+### `interface` `extends` `interface`
 
 ```typescript
 interface CouldBeBoss { boss: boolean }
@@ -540,7 +540,7 @@ employee;
 ✅ { boss: true, name: 'Ann' }
 ```
 
-#### `interface` `extends` `type`
+### `interface` `extends` `type`
 
 ```typescript
 type CouldBeBoss = { boss: boolean }
@@ -552,7 +552,7 @@ employee;
 ✅ { boss: true, name: 'Ann' }
 ```
 
-#### `interface` `extends` `class`
+### `interface` `extends` `class`
 
 ```typescript
 class Boss {
@@ -602,7 +602,7 @@ const mrManager: Manager = {
 ❌ type error: Property 'employees' is missing in type '{ budget: 100_000; canFire: () => false; canHire: () => true; name: "Alan"; }' but required in type 'Manager'.
 ```
 
-### ReturnType
+## ReturnType
 
 ```typescript
 type StringFunction = () => string;
@@ -612,14 +612,14 @@ hello;
 ❌ type error: Type 'number' not assignable to type 'string'.
 ```
 
-#### 🔧 ReturnType - under the hood
+### 🔧 ReturnType - under the hood
 
 ```typescript
 type ReturnType<T extends (...args: any) => any> =
   T extends (...args: any) => infer R ? R : any;
 ```
 
-### Parameters
+## Parameters
 
 ```typescript
 type AddFunction = (x: number, y: number) => number;
@@ -630,7 +630,7 @@ args;
   ❌ Source has 3 element(s) but target allows only 2.
 ```
 
-### ReadonlyArray (ReadonlySet, ReadonlyMap)
+## ReadonlyArray (ReadonlySet, ReadonlyMap)
 
 ```typescript
 const numbers: ReadonlyArray<number> = [1, 2, 3];
@@ -648,7 +648,7 @@ strings.push('d');
 ❌ type error: Property 'push' does not exist on type 'readonly string[]'.
 ```
 
-### Impossible Intersections
+## Impossible Intersections
 
 ```typescript
 type HasEmailText = {
@@ -666,7 +666,7 @@ const user: User = {
 ❌ type error: Type 'string' is not assignable to type 'never'.
 ```
 
-#### Extend instead of Intersect
+## Extend instead of Intersect
 
 ```typescript
 interface HasEmail {
